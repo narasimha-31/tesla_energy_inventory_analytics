@@ -1,0 +1,5 @@
+id,name,state,country,Product,capacity_gwh,status,opened_year
+WH-01,Megafactory Lathrop,California,USA,Megapack,40,active,2022
+WH-02,Megafactory Shanghai,Shanghai,China,Megapack,20,active,2025
+WH-03,Gigafactory Nevada,Nevada,USA,Powerwall,6,active,2019
+WH-04,Megafactory Houston,Texas,USA,Megapack 3,50,construction,2026

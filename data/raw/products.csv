@@ -1,0 +1,4 @@
+id,name,type,capacity_kWh,unit_weight_tons
+PRD-01,Megapack 2,utility,3900.0,35.0
+PRD-02,Megapack 3,utility,5000.0,39.0
+PRD-03,Powerwall 3,residential,13.5,0.114
