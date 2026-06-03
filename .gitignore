@@ -19,8 +19,7 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Jupyter checkpoints
-.ipynb_checkpoints/
-
-# Power BI files are large - we'll track screenshots instead
+# Power BI files are large
 *.pbix
+
+*.db
