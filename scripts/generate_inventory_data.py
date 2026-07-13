@@ -78,8 +78,8 @@ for _, dep in df_deployments.iterrows():
         if max_storage == 0:
             max_storage = 1
 
-        safety_stock = int(q_shipped * 0.05) if q_shipped > 0 else 0
-        initial_stock = int(q_shipped * 0.12) if q_shipped > 0 else 0
+        safety_stock = int(q_shipped * 0.10) if q_shipped > 0 else 0
+        initial_stock = int(q_shipped * 0.08) if q_shipped > 0 else 0
 
         closing_stock = initial_stock
 
