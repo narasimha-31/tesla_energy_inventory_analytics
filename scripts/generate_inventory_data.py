@@ -78,8 +78,9 @@ for _, dep in df_deployments.iterrows():
         if max_storage == 0:
             max_storage = 1
 
-        safety_stock = int(q_shipped * 0.07) if q_shipped > 0 else 0
-        initial_stock = int(q_shipped * 0.06) if q_shipped > 0 else 0
+        avg_daily = q_shipped / num_days if num_days > 0 else 0
+        safety_stock = int(avg_daily * 7)
+        initial_stock = int(avg_daily * 9)
 
         closing_stock = initial_stock
 
