@@ -1,4 +1,4 @@
-# Tesla Energy — Warehouse Inventory Analytics
+# Tesla Energy - Warehouse Inventory Analytics
 
 [![Python](https://img.shields.io/badge/Python-pandas%20%7C%20numpy-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-star%20schema-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://postgresql.org)
