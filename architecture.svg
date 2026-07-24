@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="1000" height="700" fill="#fafafa"/>
+
+  <text x="40" y="46" font-size="22" font-weight="700" fill="#1a1a1a">Tesla Energy Inventory Analytics — Architecture</text>
+  <text x="40" y="68" font-size="13" fill="#777">Real quarterly totals in, simulated daily operations out, constrained to agree</text>
+
+  <!-- ============ LAYER 1: SOURCES ============ -->
+  <text x="40" y="112" font-size="11" font-weight="700" fill="#999" letter-spacing="1.5">SOURCES</text>
+
+  <rect x="40" y="126" width="200" height="76" rx="10" fill="#fff" stroke="#e12127" stroke-width="1.5"/>
+  <text x="58" y="152" font-size="13" font-weight="600" fill="#1a1a1a">SEC Filings</text>
+  <text x="58" y="171" font-size="11" fill="#666">9 quarters of GWh deployed</text>
+  <text x="58" y="188" font-size="11" fill="#666">Q1 2024 – Q1 2026</text>
+
+  <rect x="264" y="126" width="200" height="76" rx="10" fill="#fff" stroke="#e12127" stroke-width="1.5"/>
+  <text x="282" y="152" font-size="13" font-weight="600" fill="#1a1a1a">Public Specs</text>
+  <text x="282" y="171" font-size="11" fill="#666">Site capacity, product kWh,</text>
+  <text x="282" y="188" font-size="11" fill="#666">$290/kWh cost basis</text>
+
+  <!-- arrows down to generation -->
+  <path d="M140 202 L140 236" stroke="#bbb" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <path d="M364 202 L364 236" stroke="#bbb" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <defs>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L0,6.4 L7,3.2 z" fill="#bbb"/>
+    </marker>
+  </defs>
+
+  <!-- ============ LAYER 2: GENERATION ============ -->
+  <text x="40" y="262" font-size="11" font-weight="700" fill="#999" letter-spacing="1.5">PYTHON — GENERATION</text>
+
+  <rect x="40" y="276" width="424" height="120" rx="10" fill="#fff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="58" y="302" font-size="13" font-weight="600" fill="#1a1a1a">generate_reference_data.py</text>
+  <text x="58" y="321" font-size="11" fill="#666">Builds warehouse, product, and quarterly target tables</text>
+
+  <line x1="58" y1="334" x2="446" y2="334" stroke="#eee" stroke-width="1"/>
+
+  <text x="58" y="356" font-size="13" font-weight="600" fill="#1a1a1a">generate_inventory_data.py</text>
+  <text x="58" y="375" font-size="11" fill="#666">Splits GWh 90/10 → converts to units → distributes across days</text>
+  <text x="58" y="390" font-size="11" fill="#666">→ rolls stock forward → flags 7-day safety breaches</text>
+
+  <!-- constraint callout -->
+  <rect x="496" y="276" width="230" height="120" rx="10" fill="#fffdf5" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="514" y="302" font-size="12" font-weight="700" fill="#b45309">THE CONSTRAINT</text>
+  <text x="514" y="325" font-size="11" fill="#7c5a12">Daily values are scaled so</text>
+  <text x="514" y="342" font-size="11" fill="#7c5a12">each quarter sums back to</text>
+  <text x="514" y="359" font-size="11" fill="#7c5a12">the exact SEC figure.</text>
+  <text x="514" y="382" font-size="11" font-style="italic" fill="#a16207">Q2 2024 → 9.4 GWh ✓</text>
+
+  <path d="M464 336 L496 336" stroke="#f59e0b" stroke-width="1.5" fill="none" marker-end="url(#arro)"/>
+  <defs>
+    <marker id="arro" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L0,6.4 L7,3.2 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <path d="M252 396 L252 430" stroke="#bbb" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- ============ LAYER 3: STAR SCHEMA ============ -->
+  <text x="40" y="456" font-size="11" font-weight="700" fill="#999" letter-spacing="1.5">POSTGRESQL — STAR SCHEMA</text>
+
+  <rect x="40" y="470" width="686" height="190" rx="10" fill="#fff" stroke="#10b981" stroke-width="1.5"/>
+
+  <!-- fact center -->
+  <rect x="300" y="540" width="166" height="56" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="383" y="562" font-size="12" font-weight="700" fill="#065f46" text-anchor="middle">fact_daily_inventory</text>
+  <text x="383" y="580" font-size="11" fill="#047857" text-anchor="middle">2,463 rows</text>
+
+  <!-- dims -->
+  <rect x="78" y="498" width="140" height="44" rx="7" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="148" y="518" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">dim_warehouse</text>
+  <text x="148" y="533" font-size="10.5" fill="#64748b" text-anchor="middle">4 sites</text>
+
+  <rect x="78" y="596" width="140" height="44" rx="7" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="148" y="616" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">dim_product</text>
+  <text x="148" y="631" font-size="10.5" fill="#64748b" text-anchor="middle">3 products</text>
+
+  <rect x="548" y="498" width="140" height="44" rx="7" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="618" y="518" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">dim_date</text>
+  <text x="618" y="533" font-size="10.5" fill="#64748b" text-anchor="middle">821 days</text>
+
+  <rect x="548" y="596" width="140" height="44" rx="7" fill="#fff" stroke="#cbd5e1" stroke-width="1.2"/>
+  <text x="618" y="613" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">dim_quarterly</text>
+  <text x="618" y="627" font-size="11.5" font-weight="600" fill="#334155" text-anchor="middle">_targets</text>
+  <text x="618" y="640" font-size="10.5" fill="#64748b" text-anchor="middle">9 quarters</text>
+
+  <!-- schema links -->
+  <line x1="218" y1="524" x2="300" y2="552" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="218" y1="614" x2="300" y2="584" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="466" y1="552" x2="548" y2="524" stroke="#94a3b8" stroke-width="1.2"/>
+  <line x1="466" y1="584" x2="548" y2="614" stroke="#94a3b8" stroke-width="1.2"/>
+
+  <!-- ============ LAYER 4: POWER BI ============ -->
+  <text x="770" y="112" font-size="11" font-weight="700" fill="#999" letter-spacing="1.5">POWER BI</text>
+
+  <rect x="770" y="126" width="190" height="534" rx="10" fill="#fff" stroke="#8b5cf6" stroke-width="1.5"/>
+
+  <rect x="792" y="152" width="146" height="128" rx="8" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.2"/>
+  <text x="810" y="176" font-size="12" font-weight="700" fill="#5b21b6">Daily Operations</text>
+  <text x="810" y="196" font-size="10.5" fill="#6b21a8">Coordinator view</text>
+  <text x="810" y="216" font-size="10" fill="#7c3aed">· Shipped / produced KPIs</text>
+  <text x="810" y="232" font-size="10" fill="#7c3aed">· Days of inventory</text>
+  <text x="810" y="248" font-size="10" fill="#7c3aed">· Site status table</text>
+  <text x="810" y="264" font-size="10" fill="#7c3aed">· Build vs drain trend</text>
+
+  <rect x="792" y="296" width="146" height="128" rx="8" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.2"/>
+  <text x="810" y="320" font-size="12" font-weight="700" fill="#5b21b6">Quarterly Review</text>
+  <text x="810" y="340" font-size="10.5" fill="#6b21a8">Director view</text>
+  <text x="810" y="360" font-size="10" fill="#7c3aed">· GWh vs SEC actuals</text>
+  <text x="810" y="376" font-size="10" fill="#7c3aed">· Contribution by site</text>
+  <text x="810" y="392" font-size="10" fill="#7c3aed">· QoQ growth (± colored)</text>
+  <text x="810" y="408" font-size="10" fill="#7c3aed">· Shanghai ramp</text>
+
+  <rect x="792" y="440" width="146" height="140" rx="8" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.2"/>
+  <text x="810" y="464" font-size="12" font-weight="700" fill="#5b21b6">Capacity &amp; Risk</text>
+  <text x="810" y="484" font-size="10.5" fill="#6b21a8">Planning / finance view</text>
+  <text x="810" y="504" font-size="10" fill="#7c3aed">· Utilization trends</text>
+  <text x="810" y="520" font-size="10" fill="#7c3aed">· Reorder alerts by site</text>
+  <text x="810" y="536" font-size="10" fill="#7c3aed">· Production surplus</text>
+  <text x="810" y="552" font-size="10" fill="#7c3aed">· Health scorecard ($)</text>
+  <text x="810" y="568" font-size="10" fill="#7c3aed">· Inventory value</text>
+
+  <text x="810" y="606" font-size="10.5" font-weight="600" fill="#5b21b6">Slicers filter all pages:</text>
+  <text x="810" y="624" font-size="10" fill="#7c3aed">year · warehouse · product</text>
+  <text x="810" y="644" font-size="10" fill="#7c3aed">DAX time intelligence</text>
+
+  <path d="M726 560 L770 480" stroke="#bbb" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+</svg>
