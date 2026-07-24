@@ -10,7 +10,7 @@ A three-page Power BI dashboard tracking inventory across Tesla's energy storage
 
 ## Problem
 
-Tesla reports one number per quarter for energy storage: gigawatt-hours deployed. Q4 2025 was 14.2 GWh, a record. Q1 2026 came in at 8.8. That's the entire public picture — nine numbers over nine quarters.
+Tesla reports one number per quarter for energy storage: gigawatt-hours deployed. Q4 2025 was 14.2 GWh, a record. Q1 2026 came in at 8.8. That's the entire public picture, nine numbers over nine quarters.
 
 Behind those numbers, three factories were receiving cells, assembling Megapacks and Powerwalls, and shipping daily. Someone was watching stock levels and deciding whether Lathrop could cover next week's orders. None of that data is public.
 
@@ -38,9 +38,9 @@ Every visual had to answer one of those. Anything that didn't came off the page.
 
 Real, from SEC filings: nine quarters of GWh deployed, site capacities, product specs, ~$290/kWh cost basis.
 
-Simulated: 2,463 rows of daily activity — received, produced, shipped, closing stock, utilization, reorder flags — across 821 days, three active sites, two products.
+Simulated: 2,463 rows of daily activity, received, produced, shipped, closing stock, utilization, reorder flags, across 821 days, three active sites, two products.
 
-The constraint is what makes the simulation defensible. Sum every generated daily shipment for Q2 2024, convert to GWh, and you get 9.4 — the number Tesla reported. Same for all nine quarters. The quarterly chart on Page 2 is built entirely from generated data and reproduces Tesla's real deployment curve.
+The constraint is what makes the simulation defensible. Sum every generated daily shipment for Q2 2024, convert to GWh, and you get 9.4. The number Tesla reported. Same for all nine quarters. The quarterly chart on Page 2 is built entirely from generated data and reproduces Tesla's real deployment curve.
 
 <details>
 <summary>How the generation works</summary>
@@ -48,7 +48,7 @@ The constraint is what makes the simulation defensible. Sum every generated dail
 <br>
 
 1. Split each quarter's GWh 90/10 between Megapack and Powerwall, inferred from earnings calls where Megapack consistently drives storage growth
-2. Convert to unit counts using each product's kWh rating — Megapack 3.9 MWh, Powerwall 13.5 kWh
+2. Convert to unit counts using each product's kWh rating - Megapack 3.9 MWh, Powerwall 13.5 kWh
 3. Distribute across the quarter's days with a normal distribution, then scale so daily values sum to exactly the quarterly target
 4. Absorb rounding drift into day one, since whole units don't divide evenly
 5. Roll stock forward daily: yesterday's close, plus produced, minus shipped
@@ -62,7 +62,7 @@ Shanghai returns zeros through 2024 because it wasn't producing yet. Houston has
 
 ## Findings
 
-**Unit counts hide where the money sits.** Nevada ships 643,701 Powerwalls; Lathrop ships 15,823 Megapacks. By energy, Lathrop delivers 61.7 GWh against Nevada's 8.7. By inventory value, Lathrop holds $230.7M against Nevada's $38.3M — six times the capital in 2% of the units. A director reading unit counts would send attention to the wrong site. Every metric on the dashboard is normalized to GWh or dollars because of this.
+**Unit counts hide where the money sits.** Nevada ships 643,701 Powerwalls; Lathrop ships 15,823 Megapacks. By energy, Lathrop delivers 61.7 GWh against Nevada's 8.7. By inventory value, Lathrop holds $230.7M against Nevada's $38.3M - six times the capital in 2% of the units. A director reading unit counts would send attention to the wrong site. Every metric on the dashboard is normalized to GWh or dollars because of this.
 
 **The newest factory is the fragile one.**
 
@@ -74,7 +74,7 @@ Shanghai returns zeros through 2024 because it wasn't producing yet. Houston has
 
 Shanghai ships the least and triggers 87% of stock alerts. Nevada ships the most and never triggers one. High-volume steady demand self-stabilizes; low-volume ramping production doesn't. Two hot shipping days can clear a week of Shanghai's cover.
 
-**Q1 2026 was demand, not production.** After the 14.2 GWh record, Q1 2026 dropped 38% to 8.8. Production surplus stayed positive throughout — factories kept building and inventory kept accumulating. Nothing broke on the supply side.
+**Q1 2026 was demand, not production.** After the 14.2 GWh record, Q1 2026 dropped 38% to 8.8. Production surplus stayed positive throughout, factories kept building and inventory kept accumulating. Nothing broke on the supply side.
 
 ---
 
@@ -95,7 +95,7 @@ The first generator started every quarter with stock at 12% of quarterly volume 
 | Tighter again | 305 | Still noise |
 | Redefine the threshold | 31 | 1.3% of days |
 
-The fix wasn't a better number, it was recognizing the definition was wrong. A fixed percentage of quarterly volume is not how warehouses set safety stock. Rewriting it as seven days of average daily demand — the standard approach — gave 31 alerts, concentrated where you'd expect, and made the metric mean something.
+The fix wasn't a better number, it was recognizing the definition was wrong. A fixed percentage of quarterly volume is not how warehouses set safety stock. Rewriting it as seven days of average daily demand, the standard approach, gave 31 alerts, concentrated where you'd expect, and made the metric mean something.
 
 </details>
 
@@ -113,7 +113,7 @@ The QoQ measure kept returning each quarter's own value instead of the previous 
 
 <br>
 
-Months came out alphabetically — April, August, December. Quarters came out Q1 2024, Q1 2025, Q1 2026, Q2 2024. Every text column needed a numeric sort key built and explicitly assigned, in every table it appeared in.
+Months came out alphabetically, April, August, December. Quarters came out Q1 2024, Q1 2025, Q1 2026, Q2 2024. Every text column needed a numeric sort key built and explicitly assigned, in every table it appeared in.
 
 </details>
 
