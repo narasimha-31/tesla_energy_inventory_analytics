@@ -16,7 +16,7 @@ Behind those numbers, three factories were receiving cells, assembling Megapacks
 
 So I rebuilt it. 2,463 rows of daily warehouse activity, generated with Python and constrained so the totals land exactly on Tesla's reported figures, then built the dashboard those teams would have used.
 
-![Architecture](docs/architecture.svg)
+![Architecture](architecture.svg)
 
 ---
 
